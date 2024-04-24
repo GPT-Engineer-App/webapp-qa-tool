@@ -1,0 +1,76 @@
+import { Box, Flex, Text, Input, Button, Icon, VStack, Divider, Textarea } from "@chakra-ui/react";
+import { FaPlus, FaPencilAlt } from "react-icons/fa";
+
+const Index = () => {
+  const [notes, setNotes] = React.useState([
+    {
+      id: 1,
+      text: `Instant MVP Internal tool
+
+- AI reliable
+- AI Agent
+- Frontend generation
+- GitHub integration
+- Full stack connections
+- QA of the web app
+- Community ??
+- finetune etc
+- Hosting
+- Templates
+- Our web app: To become figma
+
+
+Thesis: RELIABILITY VIA QA FOR WEB APPS (constrained)
+
+ex-Monzo:
+We deliver and maintain your saas software.
+
+- higher contract value
+- Slower feedback loop?
+
+
+"tool for anyone"`,
+    },
+  ]);
+
+  const [newNote, setNewNote] = React.useState("");
+
+  const handleAddNote = () => {
+    if (newNote.trim() !== "") {
+      setNotes([...notes, { id: notes.length + 1, text: newNote }]);
+      setNewNote("");
+    }
+  };
+
+  const handleEditNote = (id, text) => {
+    setNotes(notes.map((note) => (note.id === id ? { ...note, text } : note)));
+  };
+
+  return (
+    <Box p={4} maxW="md" mx="auto">
+      <Flex justify="space-between" align="center" mb={4}>
+        <Text fontSize="lg" fontWeight="bold">
+          Notes
+        </Text>
+        <Button size="sm" leftIcon={<FaPlus />} onClick={handleAddNote}>
+          Add Note
+        </Button>
+      </Flex>
+      <VStack spacing={4} align="stretch">
+        {notes.map((note) => (
+          <Box key={note.id} p={4} border="1px solid" borderColor="gray.200" borderRadius="md">
+            <Textarea value={note.text} onChange={(e) => handleEditNote(note.id, e.target.value)} resize="vertical" minH="100px" />
+          </Box>
+        ))}
+        <Box p={4} border="1px solid" borderColor="gray.200" borderRadius="md">
+          <Input value={newNote} onChange={(e) => setNewNote(e.target.value)} placeholder="Add a new note..." mb={2} />
+          <Button size="sm" leftIcon={<FaPencilAlt />} onClick={handleAddNote}>
+            Add Note
+          </Button>
+        </Box>
+      </VStack>
+    </Box>
+  );
+};
+
+export default Index;
